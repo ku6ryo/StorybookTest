@@ -1,5 +1,6 @@
-import { fn } from '@storybook/test';
+import { fireEvent, fn } from '@storybook/test';
 import { Button } from './Button';
+import { within, userEvent, expect } from '@storybook/test';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
@@ -19,30 +20,20 @@ export default {
   args: { onClick: fn() },
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary = {
+export const Purple = {
   args: {
-    primary: true,
-    label: 'Button',
+    backgroundColor: 'purple',
+    label: 'Purple',
   },
 };
 
-export const Secondary = {
+export const Test = {
   args: {
-    label: 'Button',
+    label: 'Test',
   },
-};
-
-export const Large = {
-  args: {
-    size: 'large',
-    label: 'Button',
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button')
+    await expect(button).toBeInTheDocument()
   },
-};
-
-export const Small = {
-  args: {
-    size: 'small',
-    label: 'Button',
-  },
-};
+}
